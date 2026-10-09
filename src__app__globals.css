@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy-950: #0a1d31;
+  --color-navy-900: #0f2a44;
+  --color-navy-800: #1a3a5a;
+  --color-navy-700: #2a4d70;
+  --color-navy-600: #46637f;
+  --color-navy-500: #5d7790;
+  --color-teal-800: #0f5650;
+  --color-teal-700: #17766e;
+  --color-teal-600: #1d8a80;
+  --color-teal-100: #d9efec;
+  --color-teal-50: #eef8f6;
+  --color-mist: #eef2f5;
+  --color-rule: #d5dde4;
+  --color-amber-800: #8a5a00;
+  --color-amber-50: #fdf6e7;
+  --color-danger: #b42318;
+
+  --font-sans: var(--font-archivo, "Archivo", ui-sans-serif, system-ui, "Segoe UI", Roboto, Arial, sans-serif);
+
+  --shadow-soft: 0 1px 2px rgb(15 42 68 / 0.06), 0 8px 24px -12px rgb(15 42 68 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(15 42 68 / 0.06), 0 18px 40px -18px rgb(15 42 68 / 0.35);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5.5rem;
+  }
+  body {
+    background: #ffffff;
+    color: var(--color-navy-900);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    font-variation-settings: "wdth" 88;
+    font-weight: 700;
+    letter-spacing: -0.012em;
+    line-height: 1.12;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  :focus-visible {
+    outline: 3px solid var(--color-teal-600);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  ::selection { background: var(--color-teal-100); }
+}
+
+@layer components {
+  /* Leipätekstin rytmi pitkillä sisältösivuilla */
+  .prose-fi :where(p, ul, ol, dl, div) { margin-top: 1rem; }
+  .prose-fi :where(h2 + *, h3 + *) { margin-top: 0.6rem; }
+  .prose-fi h2 { font-size: 1.6rem; margin-top: 2.75rem; }
+  .prose-fi h3 { font-size: 1.2rem; margin-top: 2rem; }
+  .prose-fi > :first-child,
+  .prose-fi > section:first-child > h2:first-child { margin-top: 0; }
+  .prose-fi ul { list-style: none; padding: 0; }
+  .prose-fi ul > li { position: relative; padding-left: 1.5rem; }
+  .prose-fi ul > li + li { margin-top: 0.5rem; }
+  .prose-fi ul > li::before {
+    content: "";
+    position: absolute;
+    left: 0.15rem;
+    top: 0.68em;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 2px;
+    background: var(--color-teal-700);
+  }
+  .prose-fi a { color: var(--color-teal-800); text-decoration: underline; text-underline-offset: 3px; }
+  .prose-fi a:hover { color: var(--color-navy-900); }
+
+  .num { font-variant-numeric: tabular-nums; }
+}
+
+/* Yksi orkestroitu hetki: hintalipuke nousee etusivulla. */
+@keyframes slip-in {
+  from { opacity: 0; transform: translateY(14px) rotate(-1.2deg); }
+  to { opacity: 1; transform: translateY(0) rotate(-1.2deg); }
+}
+.animate-slip { animation: slip-in 700ms cubic-bezier(0.2, 0.7, 0.2, 1) 120ms both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
